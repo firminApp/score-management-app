@@ -3,13 +3,14 @@ const Game=require("../models/game");
 exports.index = async function(req, res) {
     let list= await Game.find({});
     console.log("list",list);
-    res.json({status:"success",data:"data"});
+    //res.render("index",list)
+    res.json({status:"success",data:list});
   };
   exports.store =async function(req, res) {
     let body=req.body;
+    console.log("body", body);
     let created= await Game.create(body);
-    res.json({status:"success",data:created});
-
+    return res.redirect("/")
   };
   exports.update = async function(req, res) {
     let body=req.body;

@@ -3,6 +3,7 @@ const Team=require("../models/team");
 exports.index = async function(req, res) {
     let list= await Team.find({});
     console.log("list",list);
+    //return view("index");
     res.json({status:"success",data:list});
   };
   exports.store =async function(req, res) {
