@@ -1,5 +1,8 @@
 const mongoose=require("mongoose");
 const Game=require("../models/game");
+const ObjectId=mongoose.Types.ObjectId;
+const { io } = require("socket.io-client");
+const  socket=new io("ws://localhost:3300");
 exports.index = async function(req, res) {
     let list= await Game.find({});
     console.log("list",list);
@@ -8,8 +11,15 @@ exports.index = async function(req, res) {
   };
   exports.store =async function(req, res) {
     let body=req.body;
-    console.log("body", body);
+    if(body.score_team_1!=body.score_team_2){
+      if(body.score_team_1>body.score_team_2){
+        body.winner_team_id=body.team_1_id;
+      }else{
+        body.winner_team_id=body.team_2_id;
+      }
+    }
     let created= await Game.create(body);
+    socket.emit("new_score", created)
     return res.redirect("/")
   };
   exports.update = async function(req, res) {

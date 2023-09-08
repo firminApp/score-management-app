@@ -4,7 +4,6 @@ exports.index = async function(req, res) {
     let list= await Game.find({});
     console.log("list",list);
     res.render("index",list)
-   // res.json({status:"success",data:"data"});
   };
   exports.store =async function(req, res) {
     let body=req.body;

@@ -1,7 +1,11 @@
 const express = require('express');
 var path = require('path');
+var multer = require('multer');
+var forms = multer();
 
+// apply them
 const app = express();
+app.use(forms.array());
 var cors = require('cors');
 const whitelist = ['*'];
 const corsOptions = {
@@ -13,6 +17,7 @@ app.use(cors(corsOptions));
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
 app.use(express.static("public"));
 //view engine setup
 app.set('view engine', 'ejs');
